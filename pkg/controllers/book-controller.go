@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/saiful-4321/crud/pkg/models"
+	"github.com/saiful-4321/crud/pkg/utils"
 )
 
 var newBook models.Book
@@ -34,6 +35,16 @@ func GetBookById(w http.ResponseWriter, r *http.Request) {
 	response, _ := json.Marshal(bookDetails)
 
 	w.Header().Set("Content-Type", "pkglication/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
+}
+
+func CreateBook(w http.ResponseWriter, r *http.Request) {
+	CreateBook := &models.Book{}
+	utils.ParseBody(r, CreateBook)
+	b := CreateBook.CreateBook()
+
+	response, _ := json.Marshal(b)
 	w.WriteHeader(http.StatusOK)
 	w.Write(response)
 }
